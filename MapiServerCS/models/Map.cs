@@ -1,21 +1,27 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 namespace MapiServerCS.models
 {
+	[Table("maps")]
 	public class Map
 	{
-
-		public string Heading { get; set; }
+		[System.ComponentModel.DataAnnotations.Key]
+		[Column("id")]
+        public string Id { get; set; }
+		[Column("heading")]
+        public string Heading { get; set; }
+		[Column("description")]
 		public string Description { get; set; }
+		[Column("theme")]
 		public string Theme { get; set; }
-		public int CreatorId { get; }
-		public string Id { get; }
+		
 
-		public Map(string heading, string description, string theme, int creatorId)
+		public Map(string heading, string description, string theme)
 		{
 			Heading = heading;
 			Description = description;
 			Theme = theme;
-			CreatorId = creatorId;
 			Guid mapId = Guid.NewGuid();
 			Id = mapId.ToString();
 

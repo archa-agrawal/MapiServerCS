@@ -1,8 +1,10 @@
 ﻿using System.Runtime.InteropServices;
 using System.Xml.Linq;
+using MapiServerCS.db;
 using MapiServerCS.models;
 using MapiServerCS.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace MapiServerCS.controllers;
 
@@ -16,23 +18,32 @@ public class MapController : ControllerBase
     MapService mapService = new MapService();
 
     private readonly ILogger<MapController> _logger;
+    private readonly MapiContext _dbContext;
 
-    public MapController(ILogger<MapController> logger)
+    public MapController(ILogger<MapController> logger, MapiContext dbContext)
     {
         _logger = logger;
+        _dbContext = dbContext;
     }
 
 
     [HttpGet("/map/{id}")]
-	public Map Get(string id)
+	public async Task<ActionResult<Map>> Get(string id)
 	{
-		return mapService.GetMap(id);
-	}
+        return await _dbContext.Maps.FindAsync(id);
+
+    }
 
     [HttpPost]
-    public Map Post([FromBody] Map m)
+    public async Task<ActionResult<Map>> Post([FromBody] Map m)
     {
-        return mapService.CreateMap(m);
+        await _dbContext.Maps.AddAsync(m);
+        await _dbContext.SaveChangesAsync();
+
+        return CreatedAtAction(
+            nameof(Get),
+            new { id = m.Id },
+            m);
     }
 
     [HttpPut("/map/{id}")]
