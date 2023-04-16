@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using MapiServerCS.models;
+using MapiServerCS.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MapiServerCS.controllers;
@@ -11,6 +12,9 @@ namespace MapiServerCS.controllers;
 
 public class MapController : ControllerBase
 {
+
+    MapService mapService = new MapService();
+
     private readonly ILogger<MapController> _logger;
 
     public MapController(ILogger<MapController> logger)
@@ -20,22 +24,15 @@ public class MapController : ControllerBase
 
 
     [HttpGet("/map/{id}")]
-	public Map Get(int id)
+	public Map Get(string id)
 	{
-        foreach(Map m in maps)
-        {
-            if (m.MapId = id)
-            {
-                return m
-            }
-        }
-		return new Map("abc", "def", "efg", id);
+		return mapService.GetMap(id);
 	}
 
     [HttpPost]
     public Map Post([FromBody] Map m)
     {
-        return m;
+        return mapService.CreateMap(m);
     }
 
     [HttpPut("/map/{id}")]

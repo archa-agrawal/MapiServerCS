@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 
 CREATE TABLE maps (
-  id SERIAL PRIMARY KEY,
+  id VARCHAR(255) NOT NULL,
   heading VARCHAR(255) NOT NULL,
   description VARCHAR(255),
   theme VARCHAR(255) NOT NULL,

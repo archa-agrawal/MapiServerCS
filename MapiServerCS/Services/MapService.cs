@@ -5,18 +5,15 @@ namespace MapiServerCS.Services
 {
 	public class MapService
 	{
-		public MapService()
+		
+
+		IDictionary<string, Map> maps = new Dictionary<string, Map>();
+
+
+        public Map CreateMap(Map newMap)
 		{
-		}
-
-		IDictionary<string, Map> maps = new Dictionary<int, Map>();
-
-
-		public Map CreateMap(Map newMap)
-		{
-			Map nextMap = new Map(newMap.Heading, newMap.Description, newMap.Theme, newMap.CreatorId);
-			maps.Add(nextMap.Id, nextMap);
-			return nextMap;
+			maps.Add(newMap.Id, newMap);
+			return newMap;
 		}
 
 		public Map GetMap(string mapId)
