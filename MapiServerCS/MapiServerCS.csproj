@@ -12,13 +12,11 @@
     <None Remove="db\" />
     <None Remove="models\" />
     <None Remove="properties\" />
-    <None Remove="Services\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="db\" />
     <Folder Include="models\" />
     <Folder Include="properties\" />
-    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.1" />

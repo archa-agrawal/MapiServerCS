@@ -2,7 +2,6 @@
 using System.Xml.Linq;
 using MapiServerCS.db;
 using MapiServerCS.models;
-using MapiServerCS.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,8 +13,6 @@ namespace MapiServerCS.controllers;
 
 public class MapController : ControllerBase
 {
-
-    MapService mapService = new MapService();
 
     private readonly ILogger<MapController> _logger;
     private readonly MapiContext _dbContext;
@@ -81,6 +78,17 @@ public class MapController : ControllerBase
         return NoContent();
       
     }
+
+    [HttpGet("/map/list")]
+    public async Task<ActionResult<Map>> Get()
+    {
+        var allMaps = await _dbContext.Maps.ToArrayAsync();
+
+        return CreatedAtAction(
+            nameof(Get),
+            allMaps);
+    }
+    
 
 }
 
