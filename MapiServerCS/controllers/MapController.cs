@@ -30,8 +30,13 @@ public class MapController : ControllerBase
     [HttpGet("/map/{id}")]
 	public async Task<ActionResult<Map>> Get(string id)
 	{
-        return await _dbContext.Maps.FindAsync(id);
-
+        var selectedMap = await _dbContext.Maps.FindAsync(id);
+        
+        if (selectedMap == null)
+        {
+            return NotFound();
+        }
+        return selectedMap;
     }
 
     [HttpPost]
@@ -46,16 +51,35 @@ public class MapController : ControllerBase
             m);
     }
 
-    [HttpPut("/map/{id}")]
-    public Map Put(int id, [FromBody] Map m)
+    [HttpPut]
+    public async Task<ActionResult<Map>> Put([FromBody] MapUpdate m)
     {
-        return m;
+        var selectedMap = await _dbContext.Maps.FindAsync(m.Id);
+        selectedMap.Heading = m.Heading;
+        selectedMap.Description = m.Description;
+        await _dbContext.SaveChangesAsync();
+
+        return CreatedAtAction(
+            nameof(Get),
+            new { id = m.Id },
+            m);
+ 
     }
 
     [HttpDelete("/map/{id}")]
-    public string Delete(int id)
+    public async Task<ActionResult<Map>> Delete(string id)
     {
-        return "ok";
+        var selectedMap = await _dbContext.Maps.FindAsync(id);
+
+        if (selectedMap == null)
+        {
+            return NotFound();
+        }
+        _dbContext.Maps.Remove(selectedMap);
+        await _dbContext.SaveChangesAsync();
+
+        return NoContent();
+      
     }
 
 }
