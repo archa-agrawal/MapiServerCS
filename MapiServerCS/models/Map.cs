@@ -8,15 +8,16 @@ namespace MapiServerCS.models
 		public string Description { get; set; }
 		public string Theme { get; set; }
 		public int CreatorId { get; }
-		public int Id { get; }
+		public string Id { get; }
 
-		public Map(string heading, string description, string theme, int creatorId, int id)
+		public Map(string heading, string description, string theme, int creatorId)
 		{
 			Heading = heading;
 			Description = description;
 			Theme = theme;
 			CreatorId = creatorId;
-			Id = id;
+			Guid mapId = Guid.NewGuid();
+			Id = mapId.ToString();
 
 		}
 

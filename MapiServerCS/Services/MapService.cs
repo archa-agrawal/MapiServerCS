@@ -9,19 +9,17 @@ namespace MapiServerCS.Services
 		{
 		}
 
-		IDictionary<int, Map> maps = new Dictionary<int, Map>();
+		IDictionary<string, Map> maps = new Dictionary<int, Map>();
 
-		int mapId = 1;
 
-		public Map CreateMap(string heading, string description, string theme, int creatorId)
+		public Map CreateMap(Map newMap)
 		{
-			Map newMap = new Map(heading, description, theme, creatorId, mapId);
-			maps.Add(mapId, newMap);
-			mapId++;
-			return newMap;
+			Map nextMap = new Map(newMap.Heading, newMap.Description, newMap.Theme, newMap.CreatorId);
+			maps.Add(nextMap.Id, nextMap);
+			return nextMap;
 		}
 
-		public Map GetMap(int mapId)
+		public Map GetMap(string mapId)
 		{
 			try
 			{
@@ -33,6 +31,21 @@ namespace MapiServerCS.Services
 				throw new Exception("Invalid id", ex);
 			}
 			
+		}
+
+		public Map EditMap(Map editedMap)
+		{
+			try
+			{
+				maps[editedMap.Id].Heading = editedMap.Heading;
+				maps[editedMap.Id].Description = editedMap.Description;
+				return maps[editedMap.Id];
+			}
+			catch(KeyNotFoundException ex)
+			{
+				throw new Exception("invalid id", ex);
+			}
+
 			
 		}
 	}
