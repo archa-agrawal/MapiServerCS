@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1704.2
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapiServerCS", "MapiServerCS.csproj", "{2C9DE97E-EE5F-48F5-A016-F7BBC3CFE636}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2C9DE97E-EE5F-48F5-A016-F7BBC3CFE636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C9DE97E-EE5F-48F5-A016-F7BBC3CFE636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C9DE97E-EE5F-48F5-A016-F7BBC3CFE636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C9DE97E-EE5F-48F5-A016-F7BBC3CFE636}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C539CA5-0EDD-4D35-B47A-B88F9A5A26C3}
+	EndGlobalSection
+EndGlobal
