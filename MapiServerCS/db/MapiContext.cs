@@ -7,6 +7,7 @@ namespace MapiServerCS.db
 	public class MapiContext:DbContext
 	{
 		public DbSet<Map> Maps { get; set; }
+        public DbSet<Location> Locations { get; set; }
 
         public MapiContext(DbContextOptions<MapiContext> options)
         : base(options)
