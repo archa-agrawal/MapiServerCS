@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata;
 using MapiServerCS.models;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +21,7 @@ namespace MapiServerCS.db
                "Server=localhost;Port=55000;User Id=postgres;Password=postgrespw;Database=mapiCS;");
             base.OnConfiguring(optionsBuilder);
         }
+
     }
 }
 

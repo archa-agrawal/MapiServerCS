@@ -26,8 +26,8 @@ public class MapController : ControllerBase
 
     [HttpGet("/map/{id}")]
 	public async Task<ActionResult<Map>> Get(string id)
-	{
-        var selectedMap = await _dbContext.Maps.FindAsync(id);
+    {
+        var selectedMap = await _dbContext.Maps.Include(map => map.Locations).FirstAsync(map => map.Id == id);
         
         if (selectedMap == null)
         {
@@ -82,7 +82,7 @@ public class MapController : ControllerBase
     [HttpGet("/map/list")]
     public async Task<ActionResult<Map>> Get()
     {
-        var allMaps = await _dbContext.Maps.ToArrayAsync();
+        var allMaps = await _dbContext.Maps.Include(e => e.Locations).ToArrayAsync();
 
         return CreatedAtAction(
             nameof(Get),
