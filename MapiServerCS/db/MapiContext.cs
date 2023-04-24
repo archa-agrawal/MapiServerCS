@@ -9,6 +9,7 @@ namespace MapiServerCS.db
 	{
 		public DbSet<Map> Maps { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public MapiContext(DbContextOptions<MapiContext> options)
         : base(options)

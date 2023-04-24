@@ -17,8 +17,8 @@ namespace MapiServerCS.models
         [Column("theme")]
         public string Theme { get; set; }
 		[ForeignKey("creator_id")]
-		[Column("creatoe_id")]
-		public string CreatorId;
+		[Column("creator_id")]
+		public string CreatorId { get; set; }
 		public ICollection<Location> Locations { get; } = new List<Location>();
 		
 
