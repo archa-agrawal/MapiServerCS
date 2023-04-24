@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Diagnostics;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MapiServerCS.controllers;
 [ApiController]
@@ -35,7 +36,7 @@ public class UserController : ControllerBase
 	}
 
 	[HttpPost("/user/login")]
-	public async Task<ActionResult<User>> Login([FromBody] User u)
+	public async Task<ActionResult<User>> Login([FromBody] UserDTO u)
 	{
 		var requestedUser = await _dbContext.Users.FirstAsync(user => user.Email == u.Email);
      
@@ -50,7 +51,8 @@ public class UserController : ControllerBase
 		{
 			var claims = new List<Claim>
 			{
-				new Claim(ClaimTypes.Name, u.Email)
+				new Claim(ClaimTypes.Name, requestedUser.Email),
+				new Claim(ClaimTypes.NameIdentifier, requestedUser.Id)
 			};
             var claimsIdentity = new ClaimsIdentity(claims, "Login");
 
@@ -59,7 +61,8 @@ public class UserController : ControllerBase
         }
 	}
 
-	[HttpPost("/user/logout")]
+    [Authorize]
+    [HttpPost("/user/logout")]
 	public async Task<ActionResult<User>> Logout()
 	{
         await HttpContext.SignOutAsync();

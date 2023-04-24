@@ -1,9 +1,13 @@
 ﻿using System.Runtime.InteropServices;
+using System.Security.Claims;
 using System.Xml.Linq;
 using MapiServerCS.db;
 using MapiServerCS.models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 namespace MapiServerCS.controllers;
 
@@ -16,11 +20,14 @@ public class MapController : ControllerBase
 
     private readonly ILogger<MapController> _logger;
     private readonly MapiContext _dbContext;
+    private readonly string? _userId;
 
-    public MapController(ILogger<MapController> logger, MapiContext dbContext)
+    public MapController(ILogger<MapController> logger, MapiContext dbContext, IHttpContextAccessor httpContextAccessor)
     {
+        _userId = httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         _logger = logger;
         _dbContext = dbContext;
+        
     }
 
 
@@ -36,20 +43,22 @@ public class MapController : ControllerBase
         return selectedMap;
     }
 
+    [Authorize]
     [HttpPost]
-    public async Task<ActionResult<Map>> Post([FromBody] Map m)
+    public async Task<ActionResult<Map>> Post([FromBody] MapDTO m)
     {
-        await _dbContext.Maps.AddAsync(m);
+        var map = new Map(m.Heading, m.Description, m.Theme, _userId);
+        await _dbContext.Maps.AddAsync(map);
         await _dbContext.SaveChangesAsync();
 
         return CreatedAtAction(
             nameof(Get),
-            new { id = m.Id },
-            m);
+            new MapDTO(map));
     }
 
+    [Authorize]
     [HttpPut]
-    public async Task<ActionResult<Map>> Put([FromBody] MapUpdate m)
+    public async Task<ActionResult<Map>> Put([FromBody] MapUpdateDTO m)
     {
         var selectedMap = await _dbContext.Maps.FindAsync(m.Id);
         selectedMap.Heading = m.Heading;
@@ -63,6 +72,7 @@ public class MapController : ControllerBase
  
     }
 
+    [Authorize]
     [HttpDelete("/map/{id}")]
     public async Task<ActionResult<Map>> Delete(string id)
     {

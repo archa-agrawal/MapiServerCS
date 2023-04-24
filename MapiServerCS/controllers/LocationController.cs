@@ -2,6 +2,7 @@
 using System.Xml.Linq;
 using MapiServerCS.db;
 using MapiServerCS.models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,8 @@ public class LocationController : ControllerBase
 		_dbContext = dbContext;
 	}
 
-	[HttpPost]
+    [Authorize]
+    [HttpPost]
     public async Task<ActionResult<Location>> Post([FromBody] Location l)
     {
         await _dbContext.Locations.AddAsync(l);
@@ -32,7 +34,8 @@ public class LocationController : ControllerBase
 		return newLocation;
     }
 
-	[HttpDelete]
+    [Authorize]
+    [HttpDelete]
 	public async Task<ActionResult<Location>> Delete(string id)
 	{
 		var selectedLocation = await _dbContext.Locations.FindAsync(id);
