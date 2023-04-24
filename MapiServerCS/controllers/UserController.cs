@@ -38,7 +38,9 @@ public class UserController : ControllerBase
 	public async Task<ActionResult<User>> Login([FromBody] User u)
 	{
 		var requestedUser = await _dbContext.Users.FirstAsync(user => user.Email == u.Email);
-		if (requestedUser == null)
+     
+
+        if (requestedUser == null)
 		{
 			return NotFound();
 		} else if (requestedUser.Password != u.Password)

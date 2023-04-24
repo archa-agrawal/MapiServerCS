@@ -16,23 +16,20 @@ namespace MapiServerCS.models
         public string Description { get; set; }
         [Column("theme")]
         public string Theme { get; set; }
-		[ForeignKey("creator_id")]
 		[Column("creator_id")]
-		public string CreatorId { get; set; }
+		public string UserId { get; set; }
 		public ICollection<Location> Locations { get; } = new List<Location>();
 		
 
-		public Map(string heading, string description, string theme, string creatorId)
+		public Map(string heading, string description, string theme, string userId)
 		{
 			Heading = heading;
 			Description = description;
 			Theme = theme;
 			Guid mapId = Guid.NewGuid();
 			Id = mapId.ToString();
-			CreatorId = creatorId;
+			UserId = userId;
 		}
-
-
 	}
 }
 

@@ -19,11 +19,10 @@ namespace MapiServerCS.models
         public string LastName { get; set; }
         [Column("avatar")]
         public string Avatar { get; set; }
+
 		public ICollection<Map> Maps { get; } = new List<Map>();
 
-
-	
-		public User( string email, string password, string firstName, string lastName, string avatar)
+        public User( string email, string password, string firstName, string lastName, string avatar)
 		{
 			Email = email;
 			Password = password;
